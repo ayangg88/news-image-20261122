@@ -17,3 +17,7 @@ OUT = Path(os.environ.get("MAKEFUN_OUTPUT_DIR", "/output"))
 
 OUT.mkdir(parents=True, exist_ok=True)
 shutil.copyfile(HERE / "entry.png", OUT / "entry.png")
+
+# Fail loudly rather than shipping a partial copy.
+if (OUT / "entry.png").stat().st_size != (HERE / "entry.png").stat().st_size:
+    raise SystemExit("entry.png copy incomplete")
